@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NACA Airfoil Plotter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: calc(100% - 130px); /* Ajusta o tamanho com base no botão */
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .download-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .download-button:hover {
+            background-color: #218838;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 10px 0;
+        }
+        h2 {
+            color: #007bff;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul h2 {
+            margin-top: 20px;
+        }
+        .readme-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #17a2b8;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .readme-button:hover {
+            background-color: #138496;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NACA Airfoil Plotter</h1>
+        <form method="post" action="/">
+            <label for="naca_code">Enter NACA Code:</label>
+            <input type="text" id="naca_code" name="naca_code" required>
+            <button type="submit">Plot</button>
+        </form>
+        {% if image_filename %}
+            <h2>Generated Airfoil:</h2>
+            <img src="{{ url_for('static_files', filename=image_filename) }}" alt="NACA Airfoil">
+            <h3>Details:</h3>
+            <ul>
+                <li>
+                    <h2>Camber Line and Thickness Distribution:</h2>
+                    <img src="{{ url_for('static_files', filename=details_image_filename) }}" alt="Camber Line and Thickness Distribution">
+                </li>
+                <li>
+                    <h2>Pressure Distribution:</h2>
+                    <img src="{{ url_for('static_files', filename=pressure_image_filename) }}" alt="Pressure Distribution">
+                </li>
+                <li>
+                    <h2>Lift Polar Curve:</h2>
+                    <img src="{{ url_for('static_files', filename=polar_image_filename) }}" alt="Lift Polar Curve">
+                </li>
+                <li>
+                    <h2>Drag Polar Curve:</h2>
+                    <img src="{{ url_for('static_files', filename=polar_drag_image_filename) }}" alt="Drag Polar Curve">
+                </li>
+            </ul>
+            <a href="{{ url_for('static_files', filename=pdf_filename) }}" class="download-button" download>Download PDF Report</a>
+        {% endif %}
+        <!-- Botão para ver o readme.html -->
+        <a href="/static/readme.html" target="_blank" class="readme-button">View README</a>
+    </div>
+</body>
+</html>

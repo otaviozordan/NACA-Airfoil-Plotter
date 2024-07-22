@@ -1,0 +1,123 @@
+<h1>NACA Airfoil Plotter</h1>
+
+<h4>Video Demo: https://youtu.be/ZzYQg_iRxVs</h4>
+
+<h4>Description:</h4>
+
+<p>The NACA Airfoil Plotter is a web-based application designed to visualize and analyze NACA airfoils. This tool allows users to input a 4-digit NACA code and generates detailed plots of the corresponding airfoil, including the upper and lower surfaces, camber line, thickness distribution, pressure distribution, and polar curves for lift and drag. The application is built using Flask for the web interface and Matplotlib for plotting.</p>
+
+<h2>Features</h2>
+
+<ul>
+<li><strong>Input Field</strong>: Users can enter a 4-digit NACA code to generate the corresponding airfoil profile.</li>
+<li><strong>Visualizations</strong>: The application produces several plots:
+<ul>
+<li>Upper and lower surfaces of the airfoil.</li>
+<li>Camber line and thickness distribution.</li>
+<li>Pressure distribution.</li>
+<li>Lift and drag polar curves.</li>
+</ul></li>
+<li><strong>PDF Report</strong>: A downloadable PDF report containing all visualizations and analysis results.</li>
+</ul>
+
+<h2>Technologies Used</h2>
+
+<ul>
+<li><strong>Flask</strong>: A lightweight web framework for Python, used to build the web application.</li>
+<li><strong>Matplotlib</strong>: A comprehensive library for creating static, animated, and interactive visualizations in Python.</li>
+<li><strong>Python</strong>: The programming language used for backend logic and data processing.</li>
+</ul>
+
+<h2>Mathematical Formulas and Calculations</h2>
+
+<h3>Airfoil Geometry</h3>
+
+<p>The NACA 4-digit airfoil series can be characterized by three parameters: maximum camber (m), location of maximum camber (p), and maximum thickness (t).</p>
+
+<ol>
+<li><p><strong>Thickness Distribution (y_t)</strong>:</p>
+
+<ul>
+<li>The thickness distribution is given by the formula:
+$
+y_t = 5 \cdot t \cdot \left(0.2969 \cdot \sqrt{x} - 0.1260 \cdot x - 0.3516 \cdot x^2 + 0.2843 \cdot x^3 - 0.1015 \cdot x^4 \right)
+$</li>
+<li>Where $ t $ is the maximum thickness as a fraction of the chord length, and ( x ) is the position along the chord from 0 to 1.</li>
+</ul></li>
+<li><p><strong>Camber Line (y<em>c) and Its Slope (dyc</em>dx)</strong>:</p>
+
+<ul>
+<li>For positions $ x $ less than $ p $:
+$
+y<em>c = \frac{m}{p^2} \cdot (2px - x^2)
+$
+$
+\frac{dy</em>c}{dx} = \frac{2m}{p^2} \cdot (p - x)
+$</li>
+<li>For positions $ x $ greater than or equal to $ p $
+$
+y<em>c = \frac{m}{(1 - p)^2} \cdot \left((1 - 2p) + 2px - x^2\right)
+$
+$
+\frac{dy</em>c}{dx} = \frac{2m}{(1 - p)^2} \cdot (p - x)
+$</li>
+<li>Where $ m $ is the maximum camber as a fraction of the chord length and $ p $ is the position of maximum camber along the chord.</li>
+</ul></li>
+<li><p><strong>Angle of Attack and Surface Coordinates</strong>:</p>
+
+<ul>
+<li>The angle of attack ($ \theta $) is computed using:
+$
+\theta = \arctan \left(\frac{dy_c}{dx}\right)
+$</li>
+<li>Upper and lower surface coordinates are calculated as:
+$
+x<em>u = x - y</em>t \cdot \sin(\theta)
+$
+$
+y<em>u = y</em>c + y<em>t \cdot \cos(\theta)
+$
+$
+x</em>l = x + y<em>t \cdot \sin(\theta)
+$
+$
+y</em>l = y<em>c - y</em>t \cdot \cos(\theta)
+$</li>
+</ul></li>
+</ol>
+
+<h3>Aerodynamic Coefficients</h3>
+
+<ol>
+<li><p><strong>Lift Coefficient (Cl)</strong>:</p>
+
+<ul>
+<li>Simplified Lift Coefficient:
+$
+C_l = 2 \cdot \pi \cdot m
+$</li>
+<li>Where $ m $ is the maximum camber of the airfoil.</li>
+</ul></li>
+<li><p><strong>Drag Coefficient (Cd)</strong>:</p>
+
+<ul>
+<li>Simplified Drag Coefficient:
+$
+C_d = 0.01
+$</li>
+<li>This value is a simplification and does not account for real-world variations.</li>
+</ul></li>
+<li><p><strong>Polar Curves</strong>:</p>
+
+<ul>
+<li>Lift Polar Curve:
+$
+C_{l,\text{polar}} = 2 \cdot \pi \cdot m \cdot \sin(\text{angle_of_attack})
+$</li>
+<li>Drag Polar Curve:
+$
+C<em>{d,\text{polar}} = C</em>d \cdot \left(1 + \tan(\text{angle_of_attack})^2\right)
+$</li>
+<li>These formulas provide a simplified model of lift and drag characteristics as a function of the angle of attack.</li>
+</ul></li>
+</ol>
